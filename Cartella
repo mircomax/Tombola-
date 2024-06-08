@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "Finestrella.h"
+class Tessera
+{
+private:
+	std::string nome;
+	Finestrella finestrelle[15];
+public:
+	Tessera(std::string nome) {
+		this->nome = nome;
+	}
+	void nuova() {
+		bool duplicato;
+		do {
+			duplicato = false;
+			for (size_t i = 0; i < 15; i++) {
+				int numero = (rand() % 90 + 1);
+				finestrelle[i].setNumero(numero);
+				finestrelle[i].Apri();
+			}
+			for (size_t j = 0; j < 15; j++) {
+				for (size_t l = j + 1; l < 15; l++) {
+					if (finestrelle[j].getNumero() == finestrelle[l].getNumero()) { //controllo presenza numero duplicato
+						duplicato = true;
+						break;
+					}
+				}
+				if (duplicato) break;
+			}
+		} while (duplicato);
+
+	}
+	bool controlla(int n) {
+		for (size_t i = 0; i < 15; i++) {
+			if (finestrelle[i].getNumero() == n) {
+				finestrelle[i].Chiudi();
+				return true;
+			}
+		}
+		return false;
+	}
+	bool completa() {
+		for (size_t i = 0; i < 15; i++) {
+			if (finestrelle[i].Stato()) { //se trova una finestrella è aperta ferma il ciclo
+				return false;
+			}
+		}
+		return true;
+	}
+	void stampa() {
+		std::cout << '\n' << "Nome giocatore: " << nome << '\n';
+		for (size_t i = 0; i < 15; i++) {
+			switch (i) {
+			case 5:
+				std::cout << '\n';
+				break;
+			case 10:
+				std::cout << '\n';
+				break;
+			}
+			if (finestrelle[i].Stato()) {
+				std::cout << finestrelle[i].getNumero() << " ";
+			}
+			else {
+				std::cout << "** ";
+			}
+		}
+		std::cout << '\n';
+	}
+};
