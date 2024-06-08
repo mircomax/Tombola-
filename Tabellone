@@ -1,0 +1,89 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <windows.h>
+class Tabellone
+{
+private:
+    int numeri[100];
+    int conta = 0; // conta quanti numeri sono stati estratti
+    int num_estratti[100]; // numeri estratti
+    bool presente; // utile nello stampare il tabellone
+    bool estratti[100] = { false }; // stato di estrazione per ogni numero
+public:
+    void nuovo() {
+        for (int i = 0; i < 100; i++) {
+            numeri[i] = i + 1;
+        }
+    }
+
+    int estrai() {
+        int estratto;
+        do {
+            num_estratti[conta] = (std::rand() % 100 + 1);
+            estratto = num_estratti[conta];
+        } while (estratti[estratto - 1]); // continua a estrarre finché non trova un numero non estratto
+        estratti[estratto - 1] = true; // segna il numero come estratto
+        conta++; // Incrementa prima del return
+        return num_estratti[conta - 1]; // Restituisce l'ultimo numero estratto
+    }
+
+    bool completato() {
+        return conta == 100;
+    }
+
+    void stampa_estrazioni() {
+        std::cout << "Numeri estratti fino ad ora: ";
+        for (int i = 0; i < conta; i++) {
+            std::cout << num_estratti[i] << ", ";
+        }
+        std::cout << "TOTALE: " << conta << std::endl;
+    }
+
+    void stampa_tabellone() {
+        std::cout << "TABELLONE: " << std::endl;
+        for (int i = 0; i < 100; i++) {
+            presente = false;
+            for (int j = 0; j < conta; j++) {
+                if (numeri[i] == num_estratti[j]) {
+                    std::cout << num_estratti[j] << " ";
+                    presente = true;
+                    break;
+                }
+            }
+            switch (i) {
+            case 10:
+                std::cout << '\n';
+                break;
+            case 20:
+                std::cout << '\n';
+                break;
+            case 30:
+                std::cout << '\n';
+                break;
+            case 40:
+                std::cout << '\n';
+                break;
+            case 50:
+                std::cout << '\n';
+                break;
+            case 60:
+                std::cout << '\n';
+                break;
+            case 70:
+                std::cout << '\n';
+                break;
+            case 80:
+                std::cout << '\n';
+                break;
+            case 90:
+                std::cout << '\n';
+                break;
+            }
+            if (!presente) {
+                std::cout << "** ";
+            }
+        }
+        std::cout << std::endl;
+    }
+};
