@@ -1,0 +1,73 @@
+#include "Tabellone.h"
+#include "Finestrella.h"
+#include "Cartella.h"
+#include <iostream>
+
+int main()
+{
+    srand(time(NULL));
+    int scelta;
+    Tabellone primo;
+    std::cout << "TOMBOLA:" << '\n' << "COMANDI:" << '\n' << "PREMERE 1 PER CREARE UN NUOVO TABELLONE" << '\n'
+        << "PREMERE QUALSIASI ALTRO TASTO PER USCIRE" << '\n';
+    std::cin >> scelta;
+    while (scelta == 1) {
+        std::string nome;
+        std::cout << "Inserisci il tuo nome: ";
+        std::cin >> nome;
+        Tessera tessera1(nome);
+        tessera1.nuova(); //inizializzazione tessera
+        primo.nuovo(); //inizializzazione tabellone
+        int conteggio = 0; //contare numeri estratti
+        std::cout << "COMANDI: " << '\n'
+        << "PREMERE 1 PER ESTRARRE UN NUMERO" << '\n'
+        << "PREMERE 2 PER VISUALIZZARE I NUMERI ESTRATTI" << '\n'
+        << "PREMERE 3 PER VISUALIZZARE IL TABELLONE" << '\n'
+        << "PREMERE 4 PER VISUALIZZARE LA CARTELLA" << '\n'
+        << "PREMERE QUALSIASI ALTRO TASTO PER USCIRE" << '\n';
+        do {
+            int scelta2;
+            std::cout << '\n' << "Scelta: ";
+            std::cin >> scelta2;
+            int numero;
+            switch (scelta2) {
+            case 1:
+                std::cout << "Estrazione..." << '\n';
+                Sleep(1000);
+                numero = primo.estrai(); //memorizza numero estratto
+                std::cout << '\n' << "Numero estratto: " << numero << '\n';
+                if (tessera1.controlla(numero)) { //controlla se il numero è presente
+                    std::cout << '\n' << "Il numero " << numero << " e' presente nella cartella! " << '\n';
+                    tessera1.stampa();
+                }
+                else {
+                    std::cout << '\n' << "Il numero " << numero << " non e' presente nella cartella. ";
+                }
+                conteggio++;
+                break;
+            case 2:
+                primo.stampa_estrazioni(); //stampa numeri estratti
+                std::cout << '\n';
+                break;
+            case 3:
+                primo.stampa_tabellone(); //stampa tabellone
+                std::cout << '\n';
+                break;
+            case 4:
+                tessera1.stampa();
+                break;
+            default:
+                scelta = 0; // Uscire dal ciclo
+                break;
+            }
+            
+        } while (!tessera1.completa());
+        if (tessera1.completa()) {
+            std::cout << "Hai fatto TOMBOLA al numero " << conteggio << "!!!!!!";
+        }
+        else {
+            std::cout << "Chiusura programma.....";
+            Sleep(2500);
+        }
+    }
+}
