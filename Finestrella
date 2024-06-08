@@ -1,0 +1,28 @@
+#include <iostream>
+class Finestrella
+{
+private:
+	bool aperta;
+	int numero;
+public:
+	Finestrella(int numero = 0, bool aperta = true) {
+		this->numero = numero;
+		this->aperta = aperta;
+	}
+	void Apri() {
+		aperta = true;
+	}
+	void Chiudi() {
+		aperta = false;
+	}
+	void setNumero(int n) {
+		this->numero = n;
+	}
+	bool Stato() {
+		return aperta;
+	}
+	int getNumero() {
+		return numero;
+	}
+
+};
